@@ -13,6 +13,11 @@
 		E2B4E94020A2E7FA00ACD70E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2B4E93F20A2E7FA00ACD70E /* Assets.xcassets */; };
 		E2B4E94320A2E7FA00ACD70E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B4E94120A2E7FA00ACD70E /* MainMenu.xib */; };
 		E2B4E94620A2E7FA00ACD70E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B4E94520A2E7FA00ACD70E /* main.m */; };
+		E2B4E95120A2F05600ACD70E /* NodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B4E94D20A2F05600ACD70E /* NodeView.m */; };
+		E2B4E95220A2F05600ACD70E /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B4E94F20A2F05600ACD70E /* GraphView.m */; };
+		E2D7FACE20A3004A006651F0 /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D7FACD20A3004A006651F0 /* Graph.m */; };
+		E2D7FAD120A30059006651F0 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D7FAD020A30059006651F0 /* Node.m */; };
+		E2D7FAD320A30940006651F0 /* NSBezierPath+Arrowhead.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D7FAD220A30940006651F0 /* NSBezierPath+Arrowhead.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +32,16 @@
 		E2B4E94420A2E7FA00ACD70E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2B4E94520A2E7FA00ACD70E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E2B4E94720A2E7FA00ACD70E /* Graphly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Graphly.entitlements; sourceTree = "<group>"; };
+		E2B4E94D20A2F05600ACD70E /* NodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeView.m; sourceTree = "<group>"; };
+		E2B4E94E20A2F05600ACD70E /* GraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
+		E2B4E94F20A2F05600ACD70E /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
+		E2B4E95020A2F05600ACD70E /* NodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeView.h; sourceTree = "<group>"; };
+		E2D7FACC20A3004A006651F0 /* Graph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
+		E2D7FACD20A3004A006651F0 /* Graph.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Graph.m; sourceTree = "<group>"; };
+		E2D7FACF20A30059006651F0 /* Node.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		E2D7FAD020A30059006651F0 /* Node.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
+		E2D7FAD220A30940006651F0 /* NSBezierPath+Arrowhead.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+Arrowhead.m"; sourceTree = "<group>"; };
+		E2D7FAD420A30967006651F0 /* NSBezierPath+Arrowhead.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+Arrowhead.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +74,10 @@
 		E2B4E93520A2E7FA00ACD70E /* Graphly */ = {
 			isa = PBXGroup;
 			children = (
+				E2B4E94E20A2F05600ACD70E /* GraphView.h */,
+				E2B4E94F20A2F05600ACD70E /* GraphView.m */,
+				E2B4E95020A2F05600ACD70E /* NodeView.h */,
+				E2B4E94D20A2F05600ACD70E /* NodeView.m */,
 				E2B4E93620A2E7FA00ACD70E /* AppDelegate.h */,
 				E2B4E93720A2E7FA00ACD70E /* AppDelegate.m */,
 				E2B4E93920A2E7FA00ACD70E /* Document.h */,
@@ -69,6 +88,12 @@
 				E2B4E94420A2E7FA00ACD70E /* Info.plist */,
 				E2B4E94520A2E7FA00ACD70E /* main.m */,
 				E2B4E94720A2E7FA00ACD70E /* Graphly.entitlements */,
+				E2D7FACC20A3004A006651F0 /* Graph.h */,
+				E2D7FACD20A3004A006651F0 /* Graph.m */,
+				E2D7FACF20A30059006651F0 /* Node.h */,
+				E2D7FAD020A30059006651F0 /* Node.m */,
+				E2D7FAD220A30940006651F0 /* NSBezierPath+Arrowhead.m */,
+				E2D7FAD420A30967006651F0 /* NSBezierPath+Arrowhead.h */,
 			);
 			path = Graphly;
 			sourceTree = "<group>";
@@ -144,8 +169,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2D7FACE20A3004A006651F0 /* Graph.m in Sources */,
 				E2B4E93B20A2E7FA00ACD70E /* Document.m in Sources */,
+				E2D7FAD320A30940006651F0 /* NSBezierPath+Arrowhead.m in Sources */,
+				E2D7FAD120A30059006651F0 /* Node.m in Sources */,
+				E2B4E95220A2F05600ACD70E /* GraphView.m in Sources */,
 				E2B4E94620A2E7FA00ACD70E /* main.m in Sources */,
+				E2B4E95120A2F05600ACD70E /* NodeView.m in Sources */,
 				E2B4E93820A2E7FA00ACD70E /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

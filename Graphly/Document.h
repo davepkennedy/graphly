@@ -7,9 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "GraphView.h"
 
-@interface Document : NSDocument
+@interface Document : NSDocument <GraphViewDelegate>
 
+@property IBOutlet GraphView* graphView;
+@property IBOutlet NSObjectController* objectController;
 
 @end
 

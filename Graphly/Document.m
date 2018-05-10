@@ -12,7 +12,9 @@
 
 @end
 
-@implementation Document
+@implementation Document {
+    Graph* _graph;
+}
 
 - (instancetype)init {
     self = [super init];
@@ -33,12 +35,23 @@
     return @"Document";
 }
 
+- (void) awakeFromNib {
+    if (!_graph) {
+        _graph = [[Graph alloc] init];
+    }
+}
 
-- (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError {
-    // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
-    // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
-    [NSException raise:@"UnimplementedMethod" format:@"%@ is unimplemented", NSStringFromSelector(_cmd)];
-    return nil;
+- (void) activeNode:(Node *)node {
+    [self.objectController setContent:node];
+}
+
+- (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError * _Nullable __autoreleasing *)outError {
+    NSData* data = [NSJSONSerialization dataWithJSONObject:[_graph toArray] options:NSJSONWritingPrettyPrinted error:outError];
+    if (*outError) {
+        return NO;
+    }
+    [data writeToURL:url atomically:false];
+    return YES;
 }
 
 
@@ -46,9 +59,17 @@
     // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
     // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
     // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
-    [NSException raise:@"UnimplementedMethod" format:@"%@ is unimplemented", NSStringFromSelector(_cmd)];
+    //[NSException raise:@"UnimplementedMethod" format:@"%@ is unimplemented", NSStringFromSelector(_cmd)];
+    NSArray* array = [NSJSONSerialization JSONObjectWithData:data options:0 error:outError];
+    if (*outError) {
+        return NO;
+    }
+    _graph = [[Graph alloc] initWithNodes:array];
     return YES;
 }
 
+- (Graph*) graph {
+    return _graph;
+}
 
 @end
