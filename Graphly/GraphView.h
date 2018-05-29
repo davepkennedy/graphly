@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "NodeView.h"
+//#import "NodeView.h"
 #import "Graph.h"
 
 @protocol GraphViewDelegate
@@ -16,15 +16,15 @@
 @end
 
 @interface GraphView : NSView<NSTableViewDataSource> {
-    NSMutableArray<NodeView*>* nodes;
-    NodeView* _activeNode;
+    //NSMutableArray<NodeView*>* nodes;
+    Node* _activeNode;
 }
 
 @property IBOutlet NSTableView* tableView;
 @property IBOutlet id<GraphViewDelegate> delegate;
 
-- (NodeView*) activeNode;
-- (void) setActiveNode:(NodeView*)node;
+- (Node*) activeNode;
+- (void) setActiveNode:(Node*)node;
 
 - (IBAction)dataUpdated:(id)sender;
 

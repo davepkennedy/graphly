@@ -39,6 +39,10 @@
     return node;
 }
 
+- (void) connect:(Node*) origin to:(Node*) destination {
+    
+}
+
 -(NSArray<NSDictionary*>*) toArray {
     NSMutableArray<NSDictionary*>* data = [NSMutableArray array];
     for (Node* node in _nodes) {

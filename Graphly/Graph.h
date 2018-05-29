@@ -16,6 +16,7 @@
 - (instancetype) initWithNodes:(NSArray*)nodes;
 
 - (Node*) newNode;
+- (void) connect:(Node*) origin to:(Node*) destination;
 
 -(NSArray<NSDictionary*>*) toArray;
 
