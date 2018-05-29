@@ -19,5 +19,6 @@
 - (void) connect:(Node*) origin to:(Node*) destination;
 
 -(NSArray<NSDictionary*>*) toArray;
+-(Node*) nodeForID:(NSUUID*) identifier;
 
 @end

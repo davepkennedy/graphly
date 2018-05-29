@@ -12,7 +12,10 @@
 
 @protocol GraphViewDelegate
 - (Graph*) graph;
-- (void) activeNode:(Node*)node;
+- (void) setActiveNode:(Node*)node;
+- (void) addActiveNode:(Node*)node;
+- (void) connectTo:(Node*)node;
+- (BOOL) nodeIsActive:(Node*)node;
 @end
 
 @interface GraphView : NSView<NSTableViewDataSource> {

@@ -14,12 +14,13 @@
 
 @implementation Document {
     Graph* _graph;
+    NSMutableArray* activeNodes;
 }
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        // Add your subclass-specific initialization here.
+        _graph = [[Graph alloc] init];
     }
     return self;
 }
@@ -33,12 +34,6 @@
     // Override returning the nib file name of the document
     // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
     return @"Document";
-}
-
-- (void) awakeFromNib {
-    if (!_graph) {
-        _graph = [[Graph alloc] init];
-    }
 }
 
 - (void) activeNode:(Node *)node {
@@ -56,10 +51,6 @@
 
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError {
-    // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
-    // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
-    // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
-    //[NSException raise:@"UnimplementedMethod" format:@"%@ is unimplemented", NSStringFromSelector(_cmd)];
     NSArray* array = [NSJSONSerialization JSONObjectWithData:data options:0 error:outError];
     if (*outError) {
         return NO;
@@ -70,6 +61,30 @@
 
 - (Graph*) graph {
     return _graph;
+}
+
+- (BOOL) nodeIsActive:(Node*)node {
+    BOOL isActive = [activeNodes containsObject:node];
+    return isActive;
+}
+
+- (void) setActiveNode:(Node*)node {
+    if (node) {
+        activeNodes = [NSMutableArray arrayWithObject:node];
+    } else {
+        activeNodes = [NSMutableArray array];
+    }
+}
+
+- (void) addActiveNode:(Node*)node {
+    if (node) {
+        [activeNodes addObject:node];
+    }
+}
+
+- (void) connectTo:(Node*)node {
+    [((Node*)[self.objectController content]) addConnection:node];
+    [self.graphView setNeedsDisplay:YES];
 }
 
 @end

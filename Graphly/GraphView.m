@@ -27,9 +27,13 @@
     return YES;
 }
 
+- (BOOL) acceptsFirstResponder {
+    return YES;
+}
+
 - (void) awakeFromNib {
     // nodes = [NSMutableArray array];
-    NSMutableDictionary* nodeLookup = [NSMutableDictionary dictionary];
+    // NSMutableDictionary* nodeLookup = [NSMutableDictionary dictionary];
     /*
     for (Node* node in self.delegate.graph.nodes) {
         NodeView* nodeView = [[NodeView alloc] initNode:node withPosition:node.position];
@@ -46,10 +50,6 @@
         [node setConnections:connections];
     }
     */
-}
-
-- (BOOL) acceptsFirstResponder {
-    return YES;
 }
 
 /*
@@ -107,18 +107,17 @@ NSRect nodeRect (Node* node) {
     NSBezierPath.defaultLineWidth = 3;
     [[NSColor grayColor] setStroke];
     for (Node* node in self.delegate.graph.nodes) {
-        [self drawNode:node withFillColor:node==_activeNode ? NSColor.greenColor : NSColor.redColor];
-        /*
-        for (NodeView* connection in node.connections) {
+        for (NSUUID* connection in node.connections) {
             //[NSBezierPath strokeLineFromPoint:node.anchor toPoint:server.anchor];
-            NSBezierPath* path = [NSBezierPath bezierPathWithArrowFromPoint:node.anchor
-                                                                    toPoint:connection.anchor
+            Node* connectedNode = [self.delegate.graph nodeForID:connection];
+            NSBezierPath* path = [NSBezierPath bezierPathWithArrowFromPoint:node.position
+                                                                    toPoint:connectedNode.position
                                                                   tailWidth:2
                                                                   headWidth:9
                                                                  headLength:18];
             [path stroke];
         }
-        */
+        [self drawNode:node withFillColor:[self.delegate nodeIsActive:node] ? NSColor.greenColor : NSColor.redColor];
     }
     NSBezierPath.defaultLineWidth = lineWidth;
 }
@@ -127,20 +126,11 @@ NSRect nodeRect (Node* node) {
     return _activeNode;
 }
 
-- (void) setActiveNode:(Node*)node {
-    _activeNode = node;
-    
-    [self.tableView reloadData];
-    
-    [self.delegate activeNode:node];
-    [self setNeedsDisplay:YES];
-}
-
 - (void) addNewNodeAt:(NSPoint) point
 {
     Node* node = [self.delegate.graph newNode];
     node.position = point;
-    [self setActiveNode:node];
+    [self.delegate setActiveNode:node];
     [self setNeedsDisplay:YES];
     [self setNeedsLayout:YES];
 }
@@ -164,18 +154,25 @@ static BOOL pointInNode (NSPoint pt, Node* node) {
 
 - (void) mouseDown:(NSEvent *)event {
     NSPoint point = [self convertPoint:event.locationInWindow fromView:nil];
-    if ((event.modifierFlags & NSEventModifierFlagShift) == NSEventModifierFlagShift) {
-        Node* itemClicked = [self itemClicked:point];
+    Node* itemClicked = [self itemClicked:point];
+    if ((event.modifierFlags & NSEventModifierFlagCommand) == NSEventModifierFlagCommand) {
         if (itemClicked) {
-            [self.delegate connect:self.activeNode to:itemClicked];
+            [self.delegate connectTo:itemClicked];
         } else {
             [self addNewNodeAt:point];
         }
+    } else if ((event.modifierFlags & NSEventModifierFlagShift) == NSEventModifierFlagShift) {
+        [self.delegate addActiveNode:itemClicked];
     } else {
-        [self setActiveNode:[self itemClicked:point]];
+        [self.delegate setActiveNode:itemClicked];
         
         dragStartLocation = point;
     }
+    [self setNeedsDisplay:YES];
+}
+
+- (void) mouseDragged:(NSEvent *)event {
+    
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView

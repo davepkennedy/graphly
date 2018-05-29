@@ -51,4 +51,13 @@
     return data;
 }
 
+-(Node*) nodeForID:(NSUUID*) identifier {
+    for (Node* node in _nodes) {
+        if ([node.identifier isEqual:identifier]) {
+            return node;
+        }
+    }
+    return nil;
+}
+
 @end
