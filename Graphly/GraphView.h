@@ -16,6 +16,8 @@
 - (void) addActiveNode:(Node*)node;
 - (void) connectTo:(Node*)node;
 - (BOOL) nodeIsActive:(Node*)node;
+- (void) createGroup;
+- (void) ungroup;
 @end
 
 @interface GraphView : NSView<NSTableViewDataSource> {
@@ -27,7 +29,6 @@
 @property IBOutlet id<GraphViewDelegate> delegate;
 
 - (Node*) activeNode;
-- (void) setActiveNode:(Node*)node;
 
 - (IBAction)dataUpdated:(id)sender;
 

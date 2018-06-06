@@ -11,6 +11,7 @@
 @interface Node : NSObject
 
 @property NSUUID* identifier;
+@property NSUUID* group;
 @property NSString* name;
 @property NSPoint position;
 @property NSString* description;

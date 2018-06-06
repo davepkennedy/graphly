@@ -7,8 +7,12 @@
 //
 
 #import "GraphView.h"
+#include <math.h>
 #include <Carbon/Carbon.h>
+#import "Group.h"
+#import "Node.h"
 #import "NSBezierPath+Arrowhead.h"
+
 
 #define NODE_SIZE 20
 #define LINE_WIDTH 2
@@ -21,6 +25,7 @@
 
 @implementation GraphView {
     NSPoint dragStartLocation;
+    Node* draggingItem;
 }
 
 - (BOOL) isFlipped {
@@ -83,6 +88,23 @@ NSRect nodeRect (Node* node) {
                        NODE_SIZE, NODE_SIZE);
 }
 
+NSRect adjustGroupRect(NSRect rect, Node* node)
+{
+    NSRect nr = nodeRect(node);
+    float l = nr.origin.x < rect.origin.x ? nr.origin.x : rect.origin.x;
+    float t = nr.origin.y < rect.origin.y ? nr.origin.y : rect.origin.y;
+    
+    float r1 = rect.origin.x + rect.size.width;
+    float r2 = nr.origin.x + nr.size.width;
+    float b1 = rect.origin.y + rect.size.height;
+    float b2 = nr.origin.y + nr.size.height;
+    
+    float r = r1 > r2 ? r1 : r2;
+    float b = b1 > b2 ? b1 : b2;
+    
+    return NSMakeRect(l, t, r-l, b-t);
+}
+
 - (void) drawNode:(Node*) node withFillColor:(NSColor*) color {
     NSRect bounds = nodeRect(node);
     bounds.origin.x += LINE_WIDTH;
@@ -106,6 +128,14 @@ NSRect nodeRect (Node* node) {
     CGFloat lineWidth = NSBezierPath.defaultLineWidth;
     NSBezierPath.defaultLineWidth = 3;
     [[NSColor grayColor] setStroke];
+    for (Group* group in self.delegate.graph.groups) {
+        NSRect groupRect = nodeRect([self.delegate.graph nodeForID:group.nodes.firstObject]);
+        for (NSUUID* nodeId in group.nodes) {
+            groupRect = adjustGroupRect(groupRect, [self.delegate.graph nodeForID:nodeId]);
+        }
+        NSBezierPath* path = [NSBezierPath bezierPathWithRoundedRect:groupRect xRadius:10 yRadius:10];
+        [path stroke];
+    }
     for (Node* node in self.delegate.graph.nodes) {
         for (NSUUID* connection in node.connections) {
             //[NSBezierPath strokeLineFromPoint:node.anchor toPoint:server.anchor];
@@ -152,6 +182,24 @@ static BOOL pointInNode (NSPoint pt, Node* node) {
     return item;
 }
 
+- (void) commandKeyDown:(NSEvent*)event {
+    switch ([event.charactersIgnoringModifiers characterAtIndex:0]) {
+        case 'g':
+            [self.delegate createGroup];
+            break;
+        case 'u':
+            [self.delegate ungroup];
+            break;
+    }
+}
+
+- (void) keyDown:(NSEvent *)event {
+    
+    if ((event.modifierFlags & NSEventModifierFlagCommand) == NSEventModifierFlagCommand) {
+        [self commandKeyDown:event];
+    }
+}
+
 - (void) mouseDown:(NSEvent *)event {
     NSPoint point = [self convertPoint:event.locationInWindow fromView:nil];
     Node* itemClicked = [self itemClicked:point];
@@ -164,15 +212,32 @@ static BOOL pointInNode (NSPoint pt, Node* node) {
     } else if ((event.modifierFlags & NSEventModifierFlagShift) == NSEventModifierFlagShift) {
         [self.delegate addActiveNode:itemClicked];
     } else {
-        [self.delegate setActiveNode:itemClicked];
+        if (![self.delegate nodeIsActive:itemClicked]) {
+            [self.delegate setActiveNode:itemClicked];
+        }
         
+        draggingItem = itemClicked;
         dragStartLocation = point;
     }
     [self setNeedsDisplay:YES];
 }
 
 - (void) mouseDragged:(NSEvent *)event {
-    
+    NSLog(@"Dragged x %f y %f", event.deltaX, event.deltaY);
+    if (draggingItem) {
+        for (Node* node in self.delegate.graph.nodes) {
+            if ([self.delegate nodeIsActive:node]) {
+                
+                node.position = NSMakePoint(node.position.x + event.deltaX,
+                                            node.position.y + event.deltaY);
+            }
+        }
+        [self setNeedsDisplay:YES];
+    }
+}
+
+- (void) mouseUp:(NSEvent *)event {
+    draggingItem = nil;
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView

@@ -7,17 +7,21 @@
 //
 
 #import "Graph.h"
+#import "Group.h"
 
 @implementation Graph {
     NSMutableArray<Node*>* _nodes;
+    NSMutableArray<Group*>* _groups;
 }
 
 @synthesize nodes = _nodes;
+@synthesize groups = _groups;
 
 - (instancetype) init {
     self = [super init];
     if (self) {
         _nodes = [NSMutableArray array];
+        _groups = [NSMutableArray array];
     }
     return self;
 }
@@ -37,6 +41,11 @@
     Node* node = [[Node alloc] init];
     [_nodes addObject:node];
     return node;
+}
+- (Group*) newGroup {
+    Group* group = [[Group alloc] init];
+    [_groups addObject:group];
+    return group;
 }
 
 - (void) connect:(Node*) origin to:(Node*) destination {

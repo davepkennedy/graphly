@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		553C30D520BF422200D101DF /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 553C30D420BF422200D101DF /* Group.m */; };
 		E2B4E93820A2E7FA00ACD70E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B4E93720A2E7FA00ACD70E /* AppDelegate.m */; };
 		E2B4E93B20A2E7FA00ACD70E /* Document.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B4E93A20A2E7FA00ACD70E /* Document.m */; };
 		E2B4E93E20A2E7FA00ACD70E /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B4E93C20A2E7FA00ACD70E /* Document.xib */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		553C30D320BF422200D101DF /* Group.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Group.h; path = ../../graphly/Graphly/Group.h; sourceTree = "<group>"; };
+		553C30D420BF422200D101DF /* Group.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Group.m; path = ../../graphly/Graphly/Group.m; sourceTree = "<group>"; };
 		E2B4E93320A2E7FA00ACD70E /* Graphly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graphly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2B4E93620A2E7FA00ACD70E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E2B4E93720A2E7FA00ACD70E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -89,6 +92,8 @@
 				E2D7FAD020A30059006651F0 /* Node.m */,
 				E2D7FAD220A30940006651F0 /* NSBezierPath+Arrowhead.m */,
 				E2D7FAD420A30967006651F0 /* NSBezierPath+Arrowhead.h */,
+				553C30D320BF422200D101DF /* Group.h */,
+				553C30D420BF422200D101DF /* Group.m */,
 			);
 			path = Graphly;
 			sourceTree = "<group>";
@@ -171,6 +176,7 @@
 				E2B4E95220A2F05600ACD70E /* GraphView.m in Sources */,
 				E2B4E94620A2E7FA00ACD70E /* main.m in Sources */,
 				E2B4E93820A2E7FA00ACD70E /* AppDelegate.m in Sources */,
+				553C30D520BF422200D101DF /* Group.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 //
 
 #import "Document.h"
+#import "Group.h"
 
 @interface Document ()
 
@@ -71,6 +72,7 @@
 - (void) setActiveNode:(Node*)node {
     if (node) {
         activeNodes = [NSMutableArray arrayWithObject:node];
+        [self.objectController setContent:node];
     } else {
         activeNodes = [NSMutableArray array];
     }
@@ -85,6 +87,20 @@
 - (void) connectTo:(Node*)node {
     [((Node*)[self.objectController content]) addConnection:node];
     [self.graphView setNeedsDisplay:YES];
+}
+
+- (void) createGroup {
+    NSLog(@"createGroup");
+    Group* group = [self.graph newGroup];
+    for (Node* n in activeNodes) {
+        [group addNode:n];
+    }
+    [self.graphView setNeedsDisplay:YES];
+}
+
+- (void) ungroup {
+    NSLog(@"ungroup");
+    
 }
 
 @end
